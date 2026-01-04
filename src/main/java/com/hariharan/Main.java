@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,10 +35,17 @@ public class Main {
         // select * from laptop where ram = 32; -> SQL
         // from Laptop where ram = 32
 
-        Query query = session.createQuery("from Laptop where ram=32", Laptop.class);
-        List<Laptop> laptops = query.getResultList();
+        String brand = "Asus";
+
+        Query query = session.createQuery("select brand, model from Laptop where brand like ?1");
+        query.setParameter(1, brand);
+        List<Object[]> laptops = query.getResultList();
 
         //Laptop l1 = session.get(Laptop.class, 3);
+
+        for(Object[] data : laptops){
+            System.out.println((String)data[0] + " " + (String)data[1]);
+        }
 
         System.out.println(laptops);
 
