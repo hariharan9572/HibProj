@@ -9,11 +9,11 @@ public class Main {
     public static void main(String[] args) {
 
         Student s1 = new Student();
-        s1.setsName("Subitsha");
-        s1.setRollNo(106);
-        s1.setsAge(24);
+        /*s1.setsName("Navin");
+        s1.setRollNo(109);
+        s1.setsAge(30);*/
 
-        Student s2 = null;
+        //Student s2 = null;
 
         /*Configuration cfg = new Configuration();
         cfg.addAnnotatedClass(com.hariharan.Student.class);
@@ -27,21 +27,25 @@ public class Main {
 
         Session session = sf.openSession();
 
-        /*Transaction transaction = session.beginTransaction();
+        s1 = session.get(Student.class,109);
 
-        session.persist(s1);
+        Transaction transaction = session.beginTransaction();
 
-        transaction.commit();*/
+        //session.persist(s1);
+        //session.merge(s1);
+        session.remove(s1);
+
+        transaction.commit();
 
         //s2 = session.get(Student.class, 102); @depreciated
         //s2 = session.load(Student.class, 102);
-        s2 = session.find(Student.class, 102);
+        //s2 = session.find(Student.class, 102);
 
         session.close();
         sf.close();
 
-//        System.out.println(s1);
-        System.out.println(s2);
+        System.out.println(s1);
+        //System.out.println(s2);
 
     }
 }
