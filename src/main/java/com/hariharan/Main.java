@@ -14,13 +14,6 @@ import java.util.Objects;
 public class Main {
     public static void main(String[] args) {
 
-       /* Laptop l1 = new Laptop();
-        l1.setLid(4);
-        l1.setBrand("Asus");
-        l1.setModel("Strix");
-        l1.setRam(32);*/
-
-
         SessionFactory sf = new Configuration()
                 .addAnnotatedClass(com.hariharan.Laptop.class)
                 .configure()
@@ -28,26 +21,12 @@ public class Main {
 
         Session session = sf.openSession();
 
-       /* Transaction transaction = session.beginTransaction();
-        session.persist(l1);
-        transaction.commit();*/
+        //Laptop laptop = session.get(Laptop.class, 2); // @depreciated use find instead of get
+        //Laptop laptop = session.find(Laptop.class, 2);
 
-        // select * from laptop where ram = 32; -> SQL
-        // from Laptop where ram = 32
-
-        String brand = "Asus";
-
-        Query query = session.createQuery("select brand, model from Laptop where brand like ?1");
-        query.setParameter(1, brand);
-        List<Object[]> laptops = query.getResultList();
-
-        //Laptop l1 = session.get(Laptop.class, 3);
-
-        for(Object[] data : laptops){
-            System.out.println((String)data[0] + " " + (String)data[1]);
-        }
-
-        System.out.println(laptops);
+        //Laptop laptop = session.load(Laptop.class, 2); // @depreciated use byId instead of load --> actually load removed in hibernate v7
+        Laptop laptop = session.byId(Laptop.class).getReference(2); // Use byId().load() (THIS is the real replacement)
+        //System.out.println(laptop);
 
         session.close();
 
